@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDCost - Kalkulator Biaya Hidup Indonesia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-calculator"></i>
+                IDCost
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Beranda</a></li>
+                    <li><a href="../tax/index.html">Kalkulator Pajak</a></li>
+                    <li><a href="../cost/index.html">Biaya Hidup</a></li>
+                    <li><a href="../loan/index.html">Kalkulator Pinjaman</a></li>
+                    <li><a href="../mortgage/index.html">Kalkulator KPR</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Kalkulator Biaya Hidup Indonesia</h1>
+            <p>Hitung estimasi biaya hidup bulanan dan tahunan Anda dengan perhitungan yang komprehensif</p>
+        </div>
+
+        <div class="calculator-grid" id="calculatorGrid">
+            <div class="card">
+                <h2>
+                    <i class="fas fa-wallet"></i>
+                    Input Pengeluaran Bulanan
+                </h2>
+
+                <form id="costLivingForm">
+                    <div class="form-group">
+                        <label for="monthlyRent">
+                            Sewa/Cicilan Rumah per Bulan
+                            <i class="fas fa-question-circle info-tooltip" data-tooltip="Biaya sewa rumah atau apartemen per bulan"></i>
+                        </label>
+                        <div class="input-wrapper">
+                            <span class="currency-prefix">Rp</span>
+                            <input type="text" id="monthlyRent" class="form-input with-prefix" placeholder="0">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="utilities">
+                                Listrik & Air
+                                <i class="fas fa-question-circle info-tooltip" data-tooltip="Tagihan listrik, air, dan gas per bulan"></i>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="currency-prefix">Rp</span>
+                                <input type="text" id="utilities" class="form-input with-prefix" placeholder="0">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="internet">
+                                Internet & Telepon
+                                <i class="fas fa-question-circle info-tooltip" data-tooltip="Biaya internet, telepon, dan pulsa per bulan"></i>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="currency-prefix">Rp</span>
+                                <input type="text" id="internet" class="form-input with-prefix" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="groceries">
+                                Belanja & Makanan
+                                <i class="fas fa-question-circle info-tooltip" data-tooltip="Biaya groceries, makan di luar, dan kebutuhan sehari-hari"></i>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="currency-prefix">Rp</span>
+                                <input type="text" id="groceries" class="form-input with-prefix" placeholder="0">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="transportation">
+                                Transportasi
+                                <i class="fas fa-question-circle info-tooltip" data-tooltip="Biaya bensin, ojek, transportasi umum per bulan"></i>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="currency-prefix">Rp</span>
+                                <input type="text" id="transportation" class="form-input with-prefix" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="healthcare">
+                                Kesehatan & BPJS
+                                <i class="fas fa-question-circle info-tooltip" data-tooltip="Biaya kesehatan, BPJS, obat-obatan per bulan"></i>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="currency-prefix">Rp</span>
+                                <input type="text" id="healthcare" class="form-input with-prefix" placeholder="0">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="education">
+                                Pendidikan
+                                <i class="fas fa-question-circle info-tooltip" data-tooltip="SPP, kursus, buku, alat tulis per bulan"></i>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="currency-prefix">Rp</span>
+                                <input type="text" id="education" class="form-input with-prefix" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="entertainment">
+                                Hiburan & Rekreasi
+                                <i class="fas fa-question-circle info-tooltip" data-tooltip="Biaya nonton, jalan-jalan, hobi per bulan"></i>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="currency-prefix">Rp</span>
+                                <input type="text" id="entertainment" class="form-input with-prefix" placeholder="0">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subscriptions">
+                                Langganan & Lainnya
+                                <i class="fas fa-question-circle info-tooltip" data-tooltip="Netflix, Spotify, gym, asuransi per bulan"></i>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="currency-prefix">Rp</span>
+                                <input type="text" id="subscriptions" class="form-input with-prefix" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn" onclick="calculateCostOfLiving()">
+                        <i class="fas fa-calculator"></i>
+                        Hitung Biaya Hidup
+                    </button>
+                </form>
+            </div>
+
+            <div class="card results-card" id="resultsCard">
+                <h2>
+                    <i class="fas fa-chart-pie"></i>
+                    Hasil Perhitungan Biaya Hidup
+                </h2>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Menghitung biaya hidup...</p>
+                </div>
+
+                <div class="results" id="results" style="display: none;">
+                    <div class="result-item highlight">
+                        <span class="result-label">Total Biaya per Bulan</span>
+                        <span class="result-value" id="monthlyCost">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Biaya per Tahun</span>
+                        <span class="result-value" id="annualCost">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Biaya per Hari</span>
+                        <span class="result-value" id="dailyCost">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Kategori Terbesar</span>
+                        <span class="result-value" id="largestCategory">-</span>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="expenseChart" style="display: none;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

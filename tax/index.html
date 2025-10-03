@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDCost - Kalkulator Pajak PPh 21 Indonesia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-calculator"></i>
+                IDCost
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Beranda</a></li>
+                    <li><a href="../tax/index.html">Kalkulator Pajak</a></li>
+                    <li><a href="../cost/index.html">Biaya Hidup</a></li>
+                    <li><a href="../loan/index.html">Kalkulator Pinjaman</a></li>
+                    <li><a href="../mortgage/index.html">Kalkulator KPR</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Kalkulator Pajak PPh 21 Indonesia</h1>
+            <p>Hitung pajak penghasilan Anda dengan mudah dan akurat berdasarkan tarif pajak progresif Indonesia terbaru</p>
+        </div>
+
+        <div class="calculator-grid" id="calculatorGrid">
+            <div class="card">
+                <h2>
+                    <i class="fas fa-calculator"></i>
+                    Input Data
+                </h2>
+                
+                <div class="tax-brackets">
+                    <h3>Tarif Pajak Progresif PPh 21</h3>
+                    <table class="bracket-table">
+                        <thead>
+                            <tr>
+                                <th>Lapisan Penghasilan Kena Pajak</th>
+                                <th>Tarif Pajak</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Sampai dengan Rp 60.000.000</td><td>5%</td></tr>
+                            <tr><td>Di atas Rp 60.000.000 - Rp 250.000.000</td><td>15%</td></tr>
+                            <tr><td>Di atas Rp 250.000.000 - Rp 500.000.000</td><td>25%</td></tr>
+                            <tr><td>Di atas Rp 500.000.000 - Rp 5.000.000.000</td><td>30%</td></tr>
+                            <tr><td>Di atas Rp 5.000.000.000</td><td>35%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <form id="taxForm">
+                    <div class="form-group">
+                        <label for="income">
+                            Penghasilan Bruto Tahunan
+                            <i class="fas fa-question-circle info-tooltip" data-tooltip="Masukkan total penghasilan sebelum dikurangi pajak dan potongan lainnya"></i>
+                        </label>
+                        <div class="input-wrapper">
+                            <span class="currency-prefix">Rp</span>
+                            <input type="text" id="income" class="form-input with-prefix" placeholder="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ptkp">
+                            Status PTKP (Penghasilan Tidak Kena Pajak)
+                            <i class="fas fa-question-circle info-tooltip" data-tooltip="Pilih sesuai status pernikahan dan jumlah tanggungan"></i>
+                        </label>
+                        <select id="ptkp" class="form-input">
+                            <option value="54000000">TK/0 - Tidak Menikah - Rp 54.000.000</option>
+                            <option value="58500000">TK/1 - Tidak Menikah + 1 Tanggungan - Rp 58.500.000</option>
+                            <option value="63000000">TK/2 - Tidak Menikah + 2 Tanggungan - Rp 63.000.000</option>
+                            <option value="67500000">TK/3 - Tidak Menikah + 3 Tanggungan - Rp 67.500.000</option>
+                            <option value="58500000">K/0 - Menikah - Rp 58.500.000</option>
+                            <option value="63000000">K/1 - Menikah + 1 Tanggungan - Rp 63.000.000</option>
+                            <option value="67500000">K/2 - Menikah + 2 Tanggungan - Rp 67.500.000</option>
+                            <option value="72000000">K/3 - Menikah + 3 Tanggungan - Rp 72.000.000</option>
+                            <option value="63000000">K/I/0 - Menikah (Penghasilan Istri Digabung) - Rp 63.000.000</option>
+                            <option value="67500000">K/I/1 - Menikah (Penghasilan Istri Digabung) + 1 Tanggungan - Rp 67.500.000</option>
+                            <option value="72000000">K/I/2 - Menikah (Penghasilan Istri Digabung) + 2 Tanggungan - Rp 72.000.000</option>
+                            <option value="76500000">K/I/3 - Menikah (Penghasilan Istri Digabung) + 3 Tanggungan - Rp 76.500.000</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="includeBpjs" class="checkbox">
+                            <label for="includeBpjs">
+                                Termasuk BPJS Kesehatan & Ketenagakerjaan
+                                <i class="fas fa-question-circle info-tooltip" data-tooltip="Centang jika ingin menghitung potongan BPJS (4% dari gaji bruto, maks Rp 2.000.000/bulan)"></i>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="includeJpk" class="checkbox">
+                            <label for="includeJpk">
+                                Termasuk JPK (Jaminan Pensiun Karyawan)
+                                <i class="fas fa-question-circle info-tooltip" data-tooltip="Centang jika ingin menghitung potongan JPK (1% dari gaji bruto, maks Rp 200.000/bulan)"></i>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn" onclick="calculateTax()">
+                        <i class="fas fa-calculator"></i>
+                        Hitung Pajak
+                    </button>
+                </form>
+            </div>
+
+            <div class="card results-card" id="resultsCard">
+                <h2>
+                    <i class="fas fa-chart-pie"></i>
+                    Hasil Perhitungan
+                </h2>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Menghitung pajak...</p>
+                </div>
+
+                <div class="results" id="results" style="display: none;">
+                    <div class="result-item">
+                        <span class="result-label">Penghasilan Bruto</span>
+                        <span class="result-value" id="grossIncome">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">PTKP</span>
+                        <span class="result-value" id="ptkpAmount">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Potongan BPJS</span>
+                        <span class="result-value" id="bpjsDeduction">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Potongan JPK</span>
+                        <span class="result-value" id="jpkDeduction">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Penghasilan Kena Pajak</span>
+                        <span class="result-value" id="taxableIncome">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">PPh 21 Tahunan</span>
+                        <span class="result-value" id="annualTax">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">PPh 21 Bulanan</span>
+                        <span class="result-value" id="monthlyTax">-</span>
+                    </div>
+                    <div class="result-item highlight">
+                        <span class="result-label">Take Home Pay (Tahunan)</span>
+                        <span class="result-value" id="takeHomePay">-</span>
+                    </div>
+                    <div class="result-item highlight">
+                        <span class="result-label">Take Home Pay (Bulanan)</span>
+                        <span class="result-value" id="monthlyTakeHome">-</span>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="taxChart" style="display: none;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

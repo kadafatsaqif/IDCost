@@ -1,0 +1,380 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { overflow-x: hidden; }
+
+:root {
+    --primary: #2563eb;
+    --secondary: #3b82f6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --radius: 8px;
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 1.5rem 0;
+    box-shadow: var(--shadow);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    opacity: 0.9;
+}
+
+.nav-links a:hover { opacity: 1; text-decoration: underline; }
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.hero p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.calculator-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+.calculator-grid.two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: stretch;
+}
+
+.card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    transition: var(--transition);
+    flex: 1;
+    min-width: 300px;
+    max-width: 600px;
+}
+
+.card:hover { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+
+.card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.results-card { display: none; }
+.results-card.show {
+    display: block !important;
+    animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-group { margin-bottom: 1.5rem; }
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.input-wrapper { position: relative; }
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 1rem;
+    transition: var(--transition);
+    background: var(--surface);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-input.with-prefix { padding-left: 3rem; }
+
+.currency-prefix {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-weight: 500;
+    pointer-events: none;
+}
+
+.btn {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    padding: 0.875rem 2rem;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.results { margin-top: 2rem; }
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    background: var(--bg);
+    border-radius: var(--radius);
+    border-left: 4px solid var(--primary);
+}
+
+.result-item.highlight {
+    background: linear-gradient(135deg, var(--success), #059669);
+    color: white;
+    border-left-color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.result-label { font-weight: 500; }
+.result-value { font-weight: 600; }
+
+.chart-container {
+    margin-top: 2rem;
+    height: 300px;
+    position: relative;
+}
+
+.loading {
+    display: none;
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+}
+
+.loading.show { display: block; }
+
+.spinner {
+    border: 3px solid var(--border);
+    border-top: 3px solid var(--primary);
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.info-tooltip {
+    position: relative;
+    display: inline-block;
+    color: var(--text-muted);
+    cursor: help;
+}
+
+.info-tooltip:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 0.5rem;
+}
+
+/* Large desktop screens */
+@media (min-width: 1201px) {
+    .card { min-width: 500px; }
+}
+
+/* Medium screens - tablets and small desktops */
+@media (max-width: 1200px) {
+    .calculator-grid.two-columns {
+        display: flex !important;
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .card {
+        min-width: auto;
+        max-width: 800px;
+        flex: none;
+        width: 100%;
+    }
+}
+
+/* Tablet range - 769px to 1200px */
+@media (min-width: 769px) and (max-width: 1200px) {
+    .calculator-grid {
+        gap: 1.5rem;
+        justify-content: center;
+    }
+    
+    .calculator-grid.two-columns {
+        gap: 1.5rem;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .card {
+        min-width: 400px;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+}
+
+/* Mobile and small tablet - 768px and below */
+@media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; }
+    .nav-links { display: none; }
+    .container { padding: 1rem 0.5rem; }
+    .card { padding: 1rem; margin: 0; min-width: auto; max-width: none; width: 100%; }
+    .calculator-grid { gap: 1rem; }
+    .calculator-grid.two-columns { gap: 1rem; }
+    .form-row { grid-template-columns: 1fr; gap: 0.5rem; }
+    .form-group label { font-size: 0.9rem; line-height: 1.4; }
+    .form-input { padding: 0.6rem 0.8rem; font-size: 0.9rem; }
+    .form-input.with-prefix { padding-left: 2.5rem; }
+    .currency-prefix { left: 0.8rem; font-size: 0.9rem; }
+    .btn { padding: 0.75rem 1.5rem; font-size: 0.9rem; }
+}
+
+/* Small mobile - 480px and below */
+@media (max-width: 480px) {
+    .hero h1 { font-size: 1.6rem; line-height: 1.2; }
+    .hero p { font-size: 0.9rem; line-height: 1.4; }
+    .container { padding: 0.75rem 0.25rem; }
+    .card { padding: 0.75rem; margin: 0; }
+    .card h2 { font-size: 1.2rem; margin-bottom: 1rem; }
+    .calculator-grid { gap: 0.75rem; }
+    .calculator-grid.two-columns { gap: 0.75rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { font-size: 0.85rem; margin-bottom: 0.3rem; }
+    .form-input { padding: 0.5rem 0.6rem; font-size: 0.85rem; }
+    .form-input.with-prefix { padding-left: 2.2rem; }
+    .currency-prefix { left: 0.6rem; font-size: 0.85rem; }
+    .btn { padding: 0.65rem 1rem; font-size: 0.85rem; }
+    .info-tooltip { font-size: 0.8rem; }
+}
+
+/* Ultra-small screens */
+@media (max-width: 320px) {
+    .container { padding: 0.75rem 0.125rem; }
+    .card { padding: 0.5rem; margin: 0 0.125rem; }
+    .hero h1 { font-size: 1.4rem; }
+    .hero p { font-size: 0.85rem; }
+    .form-input { font-size: 0.8rem; padding: 0.45rem 0.5rem; }
+    .form-input.with-prefix { padding-left: 2rem; }
+    .currency-prefix { left: 0.5rem; font-size: 0.8rem; }
+}
+
+/* Touch targets for mobile */
+@media (max-width: 768px) {
+    .btn, .form-input { min-height: 44px; }
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDCost - Kalkulator Pinjaman Indonesia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-calculator"></i>
+                IDCost
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Beranda</a></li>
+                    <li><a href="../tax/index.html">Kalkulator Pajak</a></li>
+                    <li><a href="../cost/index.html">Biaya Hidup</a></li>
+                    <li><a href="../loan/index.html">Kalkulator Pinjaman</a></li>
+                    <li><a href="../mortgage/index.html">Kalkulator KPR</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Kalkulator Pinjaman Indonesia</h1>
+            <p>Hitung cicilan pinjaman pribadi, kendaraan, atau modal usaha dengan bunga yang kompetitif</p>
+        </div>
+
+        <div class="calculator-grid" id="calculatorGrid">
+            <div class="card">
+                <h2>
+                    <i class="fas fa-money-bill-wave"></i>
+                    Input Data Pinjaman
+                </h2>
+
+                <form id="loanForm">
+                    <div class="form-group">
+                        <label for="loanAmount">
+                            Jumlah Pinjaman
+                            <i class="fas fa-question-circle info-tooltip" data-tooltip="Masukkan jumlah uang yang ingin dipinjam"></i>
+                        </label>
+                        <div class="input-wrapper">
+                            <span class="currency-prefix">Rp</span>
+                            <input type="text" id="loanAmount" class="form-input with-prefix" placeholder="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="deposit">
+                            Uang Muka (Opsional)
+                            <i class="fas fa-question-circle info-tooltip" data-tooltip="Uang muka untuk mengurangi jumlah pinjaman"></i>
+                        </label>
+                        <div class="input-wrapper">
+                            <span class="currency-prefix">Rp</span>
+                            <input type="text" id="deposit" class="form-input with-prefix" placeholder="0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loanTermYears">
+                            Jangka Waktu Pinjaman
+                            <i class="fas fa-question-circle info-tooltip" data-tooltip="Masukkan berapa lama Anda akan melunasi pinjaman dalam tahun dan bulan"></i>
+                        </label>
+                        <div style="display: flex; gap: 1rem; align-items: center;">
+                            <div style="flex: 1;">
+                                <label for="loanTermYears" style="font-size: 0.9rem; margin-bottom: 0.3rem; color: var(--text-muted);">Tahun</label>
+                                <input type="number" id="loanTermYears" class="form-input" placeholder="0" min="0" max="30" value="1">
+                            </div>
+                            <div style="flex: 1;">
+                                <label for="loanTermMonths" style="font-size: 0.9rem; margin-bottom: 0.3rem; color: var(--text-muted);">Bulan</label>
+                                <input type="number" id="loanTermMonths" class="form-input" placeholder="0" min="0" max="11" value="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interestRate">
+                            Suku Bunga (% per tahun)
+                            <i class="fas fa-question-circle info-tooltip" data-tooltip="Suku bunga pinjaman per tahun (biasanya 6-24%)"></i>
+                        </label>
+                        <input type="number" id="interestRate" class="form-input" placeholder="12" step="0.1" min="0" max="50" required>
+                    </div>
+
+                    <button type="button" class="btn" onclick="calculateLoan()">
+                        <i class="fas fa-calculator"></i>
+                        Hitung Pinjaman
+                    </button>
+                </form>
+            </div>
+
+            <div class="card results-card" id="resultsCard">
+                <h2>
+                    <i class="fas fa-chart-pie"></i>
+                    Hasil Perhitungan Pinjaman
+                </h2>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Menghitung pinjaman...</p>
+                </div>
+
+                <div class="results" id="results" style="display: none;">
+                    <div class="result-item">
+                        <span class="result-label">Jumlah Pinjaman</span>
+                        <span class="result-value" id="loanAmountResult">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Uang Muka</span>
+                        <span class="result-value" id="depositResult">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Jumlah yang Dipinjam</span>
+                        <span class="result-value" id="actualLoan">-</span>
+                    </div>
+                    <div class="result-item highlight">
+                        <span class="result-label">Cicilan per Bulan</span>
+                        <span class="result-value" id="monthlyPayment">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Pembayaran</span>
+                        <span class="result-value" id="totalPayment">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Bunga</span>
+                        <span class="result-value" id="totalInterest">-</span>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="loanChart" style="display: none;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

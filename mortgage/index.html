@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDCost - Kalkulator KPR Indonesia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-calculator"></i>
+                IDCost
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Beranda</a></li>
+                    <li><a href="../tax/index.html">Kalkulator Pajak</a></li>
+                    <li><a href="../cost/index.html">Biaya Hidup</a></li>
+                    <li><a href="../loan/index.html">Kalkulator Pinjaman</a></li>
+                    <li><a href="../mortgage/index.html">Kalkulator KPR</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Kalkulator KPR Indonesia</h1>
+            <p>Hitung cicilan KPR dan simulasi kredit rumah dengan suku bunga yang berlaku di Indonesia</p>
+        </div>
+
+        <div class="calculator-grid" id="calculatorGrid">
+            <div class="card">
+                <h2>
+                    <i class="fas fa-home"></i>
+                    Input Data KPR
+                </h2>
+
+                <form id="mortgageForm">
+                    <div class="form-group">
+                        <label for="homePrice">
+                            Harga Rumah
+                            <i class="fas fa-question-circle info-tooltip" data-tooltip="Masukkan harga rumah yang ingin dibeli"></i>
+                        </label>
+                        <div class="input-wrapper">
+                            <span class="currency-prefix">Rp</span>
+                            <input type="text" id="homePrice" class="form-input with-prefix" placeholder="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="downPayment">
+                            Uang Muka (DP)
+                            <i class="fas fa-question-circle info-tooltip" data-tooltip="Uang muka biasanya 10-30% dari harga rumah"></i>
+                        </label>
+                        <div class="input-wrapper">
+                            <span class="currency-prefix">Rp</span>
+                            <input type="text" id="downPayment" class="form-input with-prefix" placeholder="0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loanTerm">
+                            Jangka Waktu Kredit (Tahun)
+                            <i class="fas fa-question-circle info-tooltip" data-tooltip="Masukkan jangka waktu pembayaran KPR dalam tahun (contoh: 15, 20, 25)"></i>
+                        </label>
+                        <input type="number" id="loanTerm" class="form-input" placeholder="15" min="1" max="50" step="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interestRate">
+                            Suku Bunga KPR (% per tahun)
+                            <i class="fas fa-question-circle info-tooltip" data-tooltip="Suku bunga KPR saat ini berkisar 6-12% per tahun"></i>
+                        </label>
+                        <input type="number" id="interestRate" class="form-input" placeholder="6" step="0.1" min="0" max="50" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="monthlyIncome">
+                            Penghasilan Bulanan (Opsional)
+                            <i class="fas fa-question-circle info-tooltip" data-tooltip="Untuk analisis kemampuan bayar (rasio ideal cicilan ≤ 30% dari penghasilan)"></i>
+                        </label>
+                        <div class="input-wrapper">
+                            <span class="currency-prefix">Rp</span>
+                            <input type="text" id="monthlyIncome" class="form-input with-prefix" placeholder="0">
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn" onclick="calculateMortgage()">
+                        <i class="fas fa-calculator"></i>
+                        Hitung KPR
+                    </button>
+                </form>
+            </div>
+
+            <div class="card results-card" id="resultsCard">
+                <h2>
+                    <i class="fas fa-chart-line"></i>
+                    Hasil Perhitungan KPR
+                </h2>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Menghitung KPR...</p>
+                </div>
+
+                <div class="results" id="results" style="display: none;">
+                    <div class="result-item">
+                        <span class="result-label">Harga Rumah</span>
+                        <span class="result-value" id="housePriceResult">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Uang Muka</span>
+                        <span class="result-value" id="downPaymentResult">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Jumlah Pinjaman</span>
+                        <span class="result-value" id="loanAmount">-</span>
+                    </div>
+                    <div class="result-item highlight">
+                        <span class="result-label">Cicilan per Bulan</span>
+                        <span class="result-value" id="monthlyPayment">-</span>
+                    </div>
+                    <div class="result-item" id="affordabilityItem" style="display: none;">
+                        <span class="result-label">Rasio Cicilan terhadap Penghasilan</span>
+                        <span class="result-value" id="affordabilityRatio">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Pembayaran</span>
+                        <span class="result-value" id="totalPayment">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Bunga</span>
+                        <span class="result-value" id="totalInterest">-</span>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="amortizationChart" style="display: none;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
