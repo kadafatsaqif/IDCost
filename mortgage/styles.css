@@ -329,6 +329,7 @@ body {
     .nav-links { display: none; }
     .container { padding: 1rem 0.5rem; }
     .card { padding: 1rem; margin: 0; min-width: auto; max-width: none; width: 100%; }
+    .hero {margin-bottom: 1rem; }
     .calculator-grid { gap: 1rem; }
     .calculator-grid.two-columns { gap: 1rem; }
     .form-group label { font-size: 0.9rem; line-height: 1.4; }
@@ -370,4 +371,5 @@ body {
 /* Touch targets for mobile */
 @media (max-width: 768px) {
     .btn, .form-input { min-height: 44px; }
+
 }
